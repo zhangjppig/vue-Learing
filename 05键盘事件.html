@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+
+<body>
+    <script src="./vue.js"></script>
+    <div id="app">
+        <!-- <input type="text" v-model="val" @keydown="target($event)" /> -->
+        <input type="text" v-model="val" @keydown.enter="target" />
+    </div>
+
+    <script>
+        var aa = new Vue({
+            el: '#app',
+            data() {
+                return {
+                    val: '',
+                }
+            },
+            methods: {
+                target(e) {
+                    // console.log(e.key, e.keyCode);
+                    // if (e.keyCode == 13) { // enter键
+                    //     window.open('https://www.baidu.com/s?wd=${this.val}', '_blank');
+                    // }
+                    window.open('https://www.baidu.com', '_blank');
+                }
+            }
+        })
+        // enter,top,left,right,down,shift,alt,meta,tab,esc
+    </script>
+</body>
+
+</html>

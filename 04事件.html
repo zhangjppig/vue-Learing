@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>vue</title>
+    <style>
+        .box {
+            width: 200px;
+            height: 200px;
+            background: rebeccapurple;
+        }
+
+        .father {
+            width: 500px;
+            height: 500px;
+            background: yellowgreen;
+            position: relative;
+        }
+
+        .son {
+            width: 200px;
+            height: 200px;
+            background: blue;
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            right: 0;
+            margin: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <script src="./vue.js"></script>
+    <div id="app">
+        <!-- <button @click=" showInfo">显示/隐藏</button> -->
+        <button @click="isShow=!isShow">显示/隐藏</button>
+        <div class="box" v-if="isShow"></div>
+
+        <a href="https://www.bilibili.com/" target="_blank" @click="stopTarget($event)">哔哩哔哩</a>
+
+        <div class="father" @click="father" @contextmenu="showMenu($event)">
+            <p class="son" @click="son($event)"></p>
+        </div>
+    </div>
+
+    <script>
+        let aa = new Vue({
+            el: '#app', // aa.$mount('#app')
+            data() {
+                return {
+                    isShow: true
+                }
+            },
+            methods: {
+                // showInfo() {
+                //     this.isShow = !this.isShow;
+                // }
+                son(e) {
+                    // console.log(e);
+                    // 阻止冒泡 e.stopPropagation(); e.cancelBubble=true;
+                    e.stopPropagation();
+                    console.log('小盒子');
+                },
+                father() {
+                    console.log('大盒子')
+                },
+                showMenu(e) {
+                    e.preventDefault();
+                    console.log('右击大盒子')
+                },
+                stopTarget(e) {
+                    e.preventDefault(); // 阻止默认事件
+                }
+            }
+        })
+        // v-on:事件="事件处理程序"，简写@
+        // vue的event事件 $event
+    </script>
+</body>
+
+</html>

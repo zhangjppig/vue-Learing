@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>vue</title>
+    <style>
+        .box {
+            width: 300px;
+            height: 200px;
+            background: rebeccapurple;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .mask {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .father {
+            width: 500px;
+            height: 500px;
+            background: yellowgreen;
+            position: relative;
+        }
+
+        .son {
+            width: 200px;
+            height: 200px;
+            background: blue;
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            right: 0;
+            margin: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <script src="./vue.js"></script>
+    <div id="app">
+        <!-- <button @click="isShow=true">显示/隐藏</button> -->
+        <button @click.once="isShow=true">显示/隐藏</button>
+
+        <!-- <div class="father" @click="father" @contextmenu="showMenu">
+            <p class="son" @click.stop="son"></p>
+        </div> -->
+        <!-- <div class="father" @click.self="father" @contextmenu="showMenu">
+            <p class="son" @click="son"></p>
+        </div> -->
+        <div class="father" @click.capture="father" @contextmenu="showMenu">
+            <p class="son" @click="son"></p>
+        </div>
+
+        <div class="mask" v-if="isShow" @click.self="isShow=false">
+            <div class="box">
+                <p><input type="text" /></p>
+                <p><input type="text" /></p>
+                <button @click="isShow=false">确定</button>
+            </div>
+        </div>
+
+        <a href="https://www.bilibili.com/" target="_blank" @click.prevent="stopTarget">哔哩哔哩</a>
+    </div>
+
+    <script>
+        let aa = new Vue({
+            el: '#app',
+            data() {
+                return {
+                    isShow: false
+                }
+            },
+            methods: {
+                son() {
+                    console.log('小盒子');
+                },
+                father() {
+                    console.log('大盒子')
+                },
+                showMenu() {
+                    console.log('右击大盒子')
+                },
+                stopTarget() {
+                }
+            }
+        })
+        // v-on:事件="事件处理程序"，v-on简写@
+        // vue的event事件 $event
+        /* 事件修饰符：
+         * stop：阻止冒泡
+         * prevent:阻止默认事件
+         * self:只作用于当前元素,在一定程度上可以阻止冒泡
+         * capture：把冒泡改为捕获
+         * once:只作用一次
+         */
+    </script>
+</body>
+
+</html>

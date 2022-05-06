@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        .active {
+            text-decoration: line-through;
+            color: red;
+            font-size: 30px;
+        }
+
+        .current {
+            font-size: 30px;
+        }
+    </style>
+</head>
+
+<body>
+    <script src="./vue.js"></script>
+    <div id="app">
+        <ul>
+            <!-- <li v-for="item in todos" :key="item.id" :class="item.done?'active':''">{{item.text}}------{{item.done}}
+            </li> -->
+            <li v-for="item in todos" :key="item.id" :class="[item.done?'active':'',item.done?'':'current']">
+                {{item.text}}------{{item.done}}
+            </li>
+        </ul>
+    </div>
+
+    <script>
+        let aa = new Vue({
+            el: '#app', // aa.$mount('#app') 
+            data: {
+                flag: true,
+                todos: [{
+                    id: 1,
+                    text: '吃饭',
+                    done: false,
+                },
+                {
+                    id: 2,
+                    text: '睡觉',
+                    done: false,
+                },
+                {
+                    id: 3,
+                    text: '打豆豆',
+                    done: true,
+                },
+                ]
+            }
+        })
+    </script>
+
+
+</body>
+
+</html>
