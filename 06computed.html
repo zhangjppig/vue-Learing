@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="./vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <input type="text" v-model="msg">
+        <h2>{{ getMsgStr }}</h2>
+        <h2>computed----{{ getMsg }}</h2>
+        <h2>computed----{{ getMsg }}</h2>       
+        <h2>reverseMsg:methods----{{reverseMsg()}}</h2>
+        <h2>reverseMsg:methods----{{reverseMsg()}}</h2>
+
+    </div>
+
+    <script>
+        var aa = new Vue({
+            el: '#app',
+            data() {
+                return {
+                    msg: 'hello',
+                }
+            },
+            methods: {
+                reverseMsg() {
+                    console.log('methods')
+                    return this.msg.split('').reverse().join('');
+                }
+            },
+            computed: {
+                getMsg: {
+                    get() {
+                        console.log('触发了get,获取getMsg');
+                        return this.msg.split('').reverse().join('');
+                    },
+                    set(value) {
+                        console.log('触发了set');
+                        console.log('set', value);
+                        this.msg = value;
+                    }
+                },
+                // computed简写
+                getMsgStr() {
+                    return this.msg.split('').reverse().join('');
+                }
+            }
+        })
+        /* computed:计算属性 通过计算得出的属性
+        * 计算属性在打开页面的时候会自动执行一次
+        * 1.computed计算属性依赖于data中的数据，会时刻监听依赖的data数据，只要依赖的数据发生变化，computed的值也会变化
+        * 2.computed有缓存的，只有当数据发生变化的时候才会重新计算，否则从缓存中直接读取数据
+        * 3.computed的get是获取当前属性的值，set是当设置当前属性值的时候触发，大部分情况下，我们只想获取当前属性的值，很少去设置当前属性的值，所以可以简写成函数的形式（默认get属性）。如果需要给当前属性设置值，不能简写。
+        */
+
+    </script>
+</body>
+
+</html>
