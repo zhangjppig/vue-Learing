@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+
+<body>
+    <script src="./vue.js"></script>
+    <div id="app">
+        <label>男</label><input type="radio" value="男" v-model="sex" />
+        <label>女</label><input type="radio" value="女" v-model="sex" />
+        <label>其他</label><input type="radio" value="其他" v-model="sex" />
+        <p>你的性别是：{{sex}}</p>
+
+        <input type="checkbox" id="checkbox" v-model="checked">《家》
+        <p>{{ checked }}</p>
+
+        <input type="checkbox" value="睡觉" v-model="hobby"> 睡觉
+        <input type="checkbox" value="游泳" v-model="hobby"> 游泳
+        <input type="checkbox" value="乒乓球" v-model="hobby"> 乒乓球
+        <input type="checkbox" value="篮球" v-model="hobby"> 篮球
+        <h3>你的爱好是:{{ hobby }}</h3>
+
+        <select v-model="level">
+            <option value="黑铁">黑铁</option>
+            <option value="青铜">青铜</option>
+            <option value="白银">白银</option>
+            <option value="黄金">黄金</option>
+            <option value="铂金">铂金</option>
+            <option value="钻石">钻石</option>
+            <option value="大师">大师</option>
+            <option value="王者">王者</option>
+        </select>
+        <h3>当前的段位是:{{level}}</h3>
+    </div>
+
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                sex: '男',
+                checked: false,
+                hobby: [],
+                level: "",
+            }
+        })
+    </script>
+
+
+</body>
+
+</html>

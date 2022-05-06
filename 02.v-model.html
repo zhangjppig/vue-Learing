@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>vue</title>
+
+</head>
+
+<body>
+    <script src="./vue.js"></script>
+    <div id="app">
+        <h3>{{ mobile }}</h3>
+        <input type="text" v-model="mobile" />
+        <p>用户名<input type="text" v-model="params.username" /></p>
+        <p>密码 <input type="text" v-model="params.password" /></p>
+        <button type="button" v-on:click="doLogin">Login</button>
+
+    </div>
+    <script>
+        var aa = new Vue({
+            el: '#app',
+            data() {
+                return {
+                    mobile: 1552099,
+                    params: {
+                        username: '',
+                        password: '',
+                    },
+                    code: '',
+                }
+            },
+            methods: {
+                doLogin() {
+                    $.ajax({
+                        url: 'http://bufantec.com/api/test/user/doLogin',
+                        method: 'post',
+                        data: this.params,
+                        success: (res) => {
+                            console.log(res.code)
+                            this.code = res.code;
+                        }
+                    })
+                }
+            },
+        })
+    </script>
+</body>
+
+</html>

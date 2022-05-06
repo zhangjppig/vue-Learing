@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>vue</title>
+</head>
+
+<body>
+    <script src="./vue.js"></script>
+    <div id="app">
+        <h2>{{ msg }} 你好 </h2>
+        <h2 v-text="movies.title"></h2>
+        <p v-html="tea"></p>
+    </div>
+
+    <script>
+        var aa = new Vue({
+            el: '#app', 
+            data() {
+                return {
+                    msg: 'hello vue.js',
+                    movies: {
+                        title: 'wood job',
+                        price: 333
+                    },
+                    tea: "<strong>红茶</strong> ￥12"
+                }
+            }
+        })
+        console.log(aa)
+
+// 指令：v- 
+// 数据绑定指令：
+// v-text="变量（数据）表达式",专门解析文本
+// v-html 可以解析文本、解析标签，（不太安全，不推荐）
+// {{}}插值表达式 v-text的简写（不会替换掉原来的内容，可以和原来的内容拼接起来）
+    </script>
+</body>
+
+</html>

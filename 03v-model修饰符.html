@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>vue</title>
+</head>
+
+<body>
+    <script src="./vue.js"></script>
+    <div id="app">
+        <input type="text" v-model.number="num1" /> +
+        <input type="text" v-model.number="num2" /> =
+        <span>{{num1 + num2}}</span>
+
+        <p>{{ typeof num1 }}</p>
+        <p><input type="text" v-model.trim.lazy="user" /></p>
+        <p>{{user}}---{{user.length}}</p>
+    </div>
+
+    <script>
+        let aa = new Vue({
+            el: '#app', // aa.$mount('#app')
+            data() {
+                return {
+                    num1: '',
+                    num2: '',
+                    user: '',
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
