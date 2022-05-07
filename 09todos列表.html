@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        .title {
+            border: 1px solid #c5c5c5;
+            height: 38px;
+            outline: none;
+            padding-left: 15px;
+            width: 300px;
+            font-size: 22px;
+        }
+
+        table {
+            width: 500px;
+            text-align: center;
+        }
+
+        td,
+        th {
+            border-bottom: 1px solid #ccc;
+            height: 50px;
+        }
+
+        span {
+            padding: 10px;
+        }
+
+        .danger {
+            color: #fff;
+            background: red;
+        }
+
+        .waring {
+            color: green;
+            background: yellow;
+        }
+    </style>
+</head>
+
+<body>
+    <script src="./vue.js"></script>
+    <div id="app">
+        <h3>my todo list<span :class="active" v-if="complete!==list.length">{{list.length-complete}}</span></h3>
+        <input type="text" class="title" placeholder="输入新任务" v-model.trim="txt" @keydown.enter="addItem" />
+
+        <table>
+            <tr>
+                <th>#</th>
+                <th>列表任务</th>
+                <th>筛选</th>
+                <th>状态</th>
+                <th>操作</th>
+            </tr>
+            <!-- <tr v-for="(item,index) in list" :key="item.id"> -->
+            <tr v-for="(item,index) in filterList" :key="item.id">
+                <td>{{index+1}}</td>
+                <td>{{item.text}}</td>
+                <td><input type="checkbox" v-model="item.done" /></td>
+                <td>{{item.done?"完成":"未完成"}}</td>
+                <td><a href="#" @click="deleteItem(item)">删除</a></td> <!-- 这里的item是实参，表示点击这一项的所有数据 -->
+
+            </tr>
+        </table>
+
+        <p> <input type="checkbox" v-model="allChecked" />显示全部</p>
+        <p>已完成: <strong>{{complete}}</strong>/ 总数: <strong>{{list.length}}</strong></p>
+
+    </div>
+    <script>
+        var aa = new Vue({
+            el: '#app',
+            data() {
+                return {
+                    txt: '',
+                    list: [{
+                        id: 1,
+                        text: '吃饭',
+                        done: true,
+                    },
+                    {
+                        id: 2,
+                        text: '睡觉',
+                        done: true,
+                    },
+                    {
+                        id: 3,
+                        text: '玩游戏',
+                        done: false,
+                    }
+                    ],
+                    nextId: 4,
+                    allChecked: false
+                }
+            },
+            methods: {
+                //1.添加一项任务
+                addItem() {
+                    // 添加任务前先判断列表是否为空
+                    if (!this.txt) return;
+                    var obj = {
+                        id: this.nextId,
+                        text: this.txt,
+                        done: false
+                    }
+                    this.list.push(obj);
+                    this.nextId++;
+                    this.txt = '';
+                },
+                // 2.删除一项任务
+                deleteItem(items) {
+                    // 根据id查找当前点击的这一项在list中的位置
+                    // findIndex找位置，el代表当前数组中每一项,数组中的每一项id和传递过来的items的id相等，说明找到了所在位置，返回的是下标index
+                    const index = this.list.findIndex(el => el.id == items.id);
+                    this.list.splice(index, 1);
+                }
+            },
+            computed: {
+                // 3.计算已经完成的任务个数
+                complete() {
+                    return this.list.filter(el => el.done).length;  // 默认是get属性，所以要用return
+                    // return this.list.filter(el=>el.done==true).length;
+                },
+                // 4.根据筛选列表
+                filterList() {
+                    /** var newArr = [];
+                    for (var i = 0; i < this.list.length; i++) {
+                        if (!this.list[i].done || this.allChecked == true) {
+                            newArr.push(this.list[i]);
+                        }
+                    }
+                    return newArr;
+                    **/
+                    return this.list.filter(el => !el.done || this.allChecked)
+                },
+                // 筛选未完成的个数并添加响应的类名
+                active() {
+                    return this.list.length - this.complete > 3 ? 'danger' : 'waring'
+                }
+            }
+        })
+
+        // 页面上展示的内容：默认展示的是未完成的allChecked=false,全选中allChecked=true
+
+    </script>
+</body>
+
+</html>
