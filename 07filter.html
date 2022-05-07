@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+
+<body>
+    <script src="./vue.js"></script>
+    <div id="app">
+        <h2>当前时间：{{times|getTime()}}</h2>
+        <p>局部的过滤器：{{count|getNum(4)}}</p>
+    </div>
+    <hr>
+    <div id="app2">
+        <h2>第2个vue实例:{{title}}</h2>
+        <h3>全局的过滤器：{{date|getTime()}}</h3>
+    </div>
+
+    <script>
+        //全局过滤器
+        Vue.filter('getTime', function (time) {
+            var year = time.getFullYear();
+            var month = (time.getMonth() + 1 + '').padStart(2, 0);
+            var day = (time.getDay() + '').padStart(2, 0);
+            /* str.padStart(targetLength [, padString])
+             * targetLength被填充後的長度，padString用來填充的字串
+             * .padStart(2, 0)填充字符
+             */
+            var hour = (time.getHours() + '').padStart(2, 0);
+            var minute = (time.getMinutes() + '').padStart(2, 0);
+            var second = (time.getSeconds() + '').padStart(2, 0);
+
+            return `${year}-${month}-${day} ${hour}:${minute}:${second}`
+        })
+        var aa = new Vue({
+            el: '#app',
+            data() {
+                return {
+                    times: new Date(),
+                    count: 25.89,
+                }
+            },
+            // 局部过滤器
+            filters: {
+                getNum(num, n) {
+                    return num.toFixed(n);
+                }
+            }
+        })
+        new Vue({
+            el: '#app2',
+            data() {
+                return {
+                    title: '我是app2',
+                    date: new Date(),
+                }
+            }
+        })
+
+        /* 全局的过滤器所有实例都可以使用，局部的过滤器只有在当前的实例才能使用
+         * 过滤器：数据|过滤器1（参数1，参数2，参数3，，，）|过滤器2（参数1，参数2，参数3，，，）
+         * 参数1表示数据，可省略不写
+         */
+    </script>
+</body>
+
+</html>
