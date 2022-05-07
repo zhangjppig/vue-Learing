@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+
+<body>
+    <script src="./vue.js"></script>
+    <div id="app">
+        <p>当前年龄是：{{getAge}}</p>
+        <p>watch监听数据的变化{{age}}</p>
+        <input type="text" v-model="people.name">
+        <h2>{{people}}</h2>
+    </div>
+
+    <script>
+        var aa = new Vue({
+            el: '#app',
+            data() {
+                return {
+                    bir: '2000-5-20',
+                    age: 0,
+                    people: {
+                        name: '陈',
+                        age: 11,
+                    }
+                }
+            },
+            computed: {
+                getAge() {
+                    return new Date().getFullYear() - new Date(this.bir).getFullYear();
+                }
+            },
+            // watch监听数据的变化从而引起另一个数据的变化，只有当数据发生变化了才能引起监听
+            // 有三个属性：handler函数，immediate，deep
+            watch: {
+                bir: {
+                    // handler函数：执行程序，当数据发生变化时会自动执行。
+                    handler() {
+                        console.log('监听到bir的变化')
+                        setTimeout(() => {
+                            this.age = new Date().getFullYear() - new Date(this.bir).getFullYear();
+                        }, 3000)
+                    },
+                    immediate: true, // 立即处理，进入页面就触发
+                },
+                'people.name': {
+                    handler(newvalue, oldvalue) {
+                        // newvalue当前的值，oldvalue上一次的值
+                        console.log('监听到people.name')
+                    }
+                }
+                /** 
+                people: {
+                    handle() {
+                        console.log('监听到people')
+                    },
+                    deep:true, //深度监听，属性的变化 people里面的name，age都会被监听到，耗能大
+                }
+                **/
+            }
+        })
+        /* computed与watch区别：
+         * watch用于观察和监听页面上的vue实例，当需要在数据变化响应时，执行异步操作，或高性能消耗的操作，watch为最佳选择
+         * computed可以关联多个实时计算的对象，当这些对象中的其中一个改变时都会触发这个属性；具有缓存能力，所以只有当数据再次改变时才会重新渲染，否则就会直接拿取缓存中的数据
+        */
+    </script>
+</body>
+
+</html>
