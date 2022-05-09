@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+
+<body>
+    <script src="./vue.js"></script>
+    <div id="app">
+        <input type="text" v-styles v-focus>
+        <p v-colors="current">56788</p>
+        <p v-pres:top="count">少时诵诗书，零零落落</p>
+    </div>
+
+    <script>
+        // 全局指令 
+        Vue.directive('colors', {
+            bind(el, binding) {
+                // console.log(el);
+                // console.log(binding);
+                // el：指当前指令绑定的元素
+                el.style.color = binding.value;
+            }
+        })
+        Vue.directive('pres', {
+            bind(el, binding) {
+                el.style.position='relative'
+                el.style[binding.arg] = binding.value + 'px'
+            }
+        })
+        Vue.directive('focus',{
+            inserted(el,binding){
+                el.focus()
+            }
+        })
+        var aa = new Vue({
+            el: '#app',
+            data() {
+                return {
+                    current: 'blue',
+                    count: 100
+                }
+            },
+            // 局部指令
+            directives:{
+                styles:{
+                    bind(el,binding){
+                        el.style.color='red'
+                    }
+                }
+            },
+        })
+    </script>
+</body>
+
+</html>
