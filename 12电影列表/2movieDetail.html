@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="../jquery-3.6.0.js"></script>
+    <style type="text/css">
+        .box {
+            width: 500px;
+            padding: 20px;
+            text-align: center;
+            border-radius: 10px;
+            margin: 30px auto;
+            box-shadow:0 0 6px 6px rgba(0, 0, 0, 0.5);
+        }
+    </style>
+</head>
+
+<body>
+    <script src="../vue.js"></script>
+    <div id="app">
+        <div class="box">
+            <h3>{{detail.title}}</h3>
+            <p>上映时间:{{detail.year}}</p>
+            <img :src="detail.small">
+            <p>电影简介:{{detail.summary}}</p>
+        </div>
+
+    </div>
+
+    <script>
+        var aa = new Vue({
+            el: '#app',
+            data() {
+                return {
+                    detail: {}
+                }
+            },
+            created() {
+                this.init();
+            },
+            methods: {
+                // 获取传递来的数据
+                init() {
+                    /**解析其他页面传递过来的参数（跨页面传值）
+                    console.log(location.search);
+                    var obj= {};
+                    var str = location.search.slice(1); // slice()方法可提取字符串的某个部分，并以新的字符串返回被提取的部分。
+                    var arr = str.split('&'); // split()把一个字符串分割成字符串数组
+                    for (var i = 0; i < arr.length; i++) {
+                        var newArr = arr[i].split('=');
+                        console.log(newArr);
+                        obj[newArr[0]]=newArr[1];
+                        console.log(obj);
+                    }
+                    **/
+                    //获取电影列表页传递过来的电影id
+                    var id = location.search.slice(1).split('=')[1];
+                    $.ajax({
+                        url: 'http://bufantec.com/api/douban/movie/subject',
+                        data: { mId: id },
+                        success: (res) => {
+                            // console.log(res);
+                            this.detail = res.data              
+                        }
+                    })
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
