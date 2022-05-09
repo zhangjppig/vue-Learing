@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <!-- <meta name="referrer" content="never"> -->
+    <title></title>
+    <script src="../jquery-3.6.0.js"></script>
+    <style type="text/css">
+        table {
+            width: 500px;
+            margin: 0 auto;
+        }
+
+        table td {
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <script src="../vue.js"></script>
+    <div id="app">
+        <!-- <button @click="getMovieList">点击获取电影列表</button> -->
+        <table border="1" cellspacing="0" cellpadding="0">
+            <tr>
+                <th>电影名字</th>
+                <th>上映时间</th>
+                <th>电影时长</th>
+                <th>电影海报</th>
+            </tr>
+            <tr v-for="item in movieList" :key="item.mId" @click="toDetail(item)">
+                <td>{{item.title}}</td>
+                <td>{{item.year}}</td>
+                <td>{{item.longtime}}</td>
+                <td>
+                    <img :src="item.small" width="100"> <!-- 电影海报每张图片都不同，用动态绑定 -->
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <script>
+        var aa = new Vue({
+            el: '#app',
+            data() {
+                return {
+                    movieList: [],
+                    // name:'Amy',
+                }
+            },
+            created() {
+                this.getMovieList();
+            },
+            methods: {
+                // 1.获取电影列表数据，data里movieList:[]。把getMovieList封装在生命周期created直接打开页面就初始化了
+                getMovieList() {
+                    $.ajax({
+                        url: 'http://bufantec.com/api/douban/movie/in_theaters',
+                        success: (res) => {
+                            console.log(res);
+                            this.movieList = res.data.list;
+                        }
+                    })
+                },
+                // 2.跳转到电影详情页面
+                toDetail(items) {
+                    // 跨页面传递参数
+                    window.open('./2movieDetail.html?id=' + items.mId, '_blank') // '_blank'新开窗口。参数，在电影数据接口里看“电影明细”里面有电影id的参数名mId
+                    // window.open('./2movieDetail.html?id=' + items.mId+'&name='+this.name, '_blank')
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
