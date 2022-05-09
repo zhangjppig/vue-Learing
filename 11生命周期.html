@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+
+<body>
+    <script src="./vue.js"></script>
+    <div id="app">
+        <h3>{{msg}}</h3>
+        <h3>count{{count}}</h3>
+        <button @click="count++">点击count++</button>
+        <button @click="del">点击销毁</button>
+
+
+    </div>
+    <script>
+        var aa = new Vue({
+            el: '#app',
+            data() {
+                return {
+                    msg: 'hello',
+                    count: 109,
+                }
+            },
+            methods: {
+                showInfo() {
+                    console.log('测试测试');
+                },
+                // 模拟销毁
+                del() {
+                    this.$destroy();
+                }
+            },
+            beforeCreate() {
+                // 数据和方法没有初始化完成，不能调用
+                console.log('beforeCreate');
+                /**var state={
+                    '$data':this.$data,
+                    '$el':this.$el
+                }
+                console.log('state');
+                this.showInfo();
+                **/
+            },
+            created() {
+                //初始化数据和方法，最早可以调用数据和方法的地方
+                console.log('created');
+                var state = {
+                    '$data': this.$data,
+                    '$el': this.$el
+                }
+                console.log(state);
+                this.showInfo();
+            },
+            beforeMount() {
+                console.log('beforeMount');
+                var state = {
+                    '$data': this.$data,
+                    '$el': this.$el
+                }
+                console.log(state);
+                this.showInfo();
+                console.log('beforeMount', document.querySelector('h3').innerHTML);
+            },
+            mounted() {
+                //  到mounted生命周期钩子函数的时候，vue实例已经初始化完成
+                console.log('mounted', document.querySelector('h3').innerHTML);
+            },
+            beforeUpdate() {
+                console.log('beforeUpdate', document.querySelector('h3').innerHTML);
+            },
+            updated() {
+                console.log('updated', document.querySelector('h3').innerHTML);
+            },
+            beforeDestroy() {
+                console.log('beforeDestroy');
+            },
+            destroyed() {
+                console.log('destroyed');
+            }
+
+        })
+    </script>
+</body>
+
+</html>

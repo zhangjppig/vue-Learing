@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+
+<body>
+    <script src="./vue.js"></script>
+    <div id="app">
+        <h3>{{msg}}</h3>
+        <button @click="onClick">click</button>
+    </div>
+    <script>
+        let timer;
+        var aa = new Vue({
+            el: '#app',
+            data() {
+                return {
+                    msg: 10,
+                }
+            },
+            created() {
+                timer = setInterval(() => {
+                    this.msg -= 1;
+                    console.log('setInterval');
+                }, 1000)
+            },
+            mounted() {
+            },
+            destroyed() {
+                clearInterval(timer);
+            },
+            methods: {
+                getElement() {
+                    const ele = document.querySelector('h3');
+                    console.log(ele);
+                },
+                onClick() {
+                    this.$destroy();
+                }
+            },
+        })
+    </script>
+</body>
+
+</html>
