@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+
+<body>
+    <script src="./vue.js"></script>
+    <div id="app">
+        <button v-if="isshow" @click="showInfo">点击显示/隐藏</button>
+        <!-- <input id="text" v-else /> -->
+        <input ref="text" v-else />
+
+    </div>
+    <script>
+        var aa = new Vue({
+            el: '#app',
+            data() {
+                return {
+                    isshow: true,
+                }
+            },
+            methods: {
+                showInfo() {
+                    this.isshow = false;
+                    this.$nextTick(() => {
+                        // document.querySelector('#text').focus();
+                        this.$refs.text.focus();
+                    })
+                }
+            }
+            // nextTick:在下次 DOM 更新循环结束之后执行延迟回调。在修改数据之后立即使用这个方法，获取更新后的 DOM。
+
+            // document.querySelector()返回文档中与指定选择器或选择器组匹配的第一个 Element对象。 如果找不到匹配项，则返回null
+            // document.getElementById() 的方式选取id元素渲染到网页
+        })
+    </script>
+</body>
+
+</html>
