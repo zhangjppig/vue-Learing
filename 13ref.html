@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+
+<body>
+    <script src="./vue.js"></script>
+    <div id="app">
+        <h3 ref="title">新鲜水果草莓 大甩卖 3元一斤</h3>
+        <p ref="price">￥28</p>
+        <button @click="getInfo">获取ref</button>
+    </div>
+    <script>
+        var aa = new Vue({
+            el: '#app',
+            data() {
+                return {
+
+                }
+            },
+            methods: {
+                getInfo() {
+                    console.log(this.$refs);
+                    this.$refs.title.style.color = 'red';
+                    this.$refs.price.style.fontSize = '60px';
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
