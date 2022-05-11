@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        table {
+            width: 800px;
+            margin: 0 auto;
+        }
+
+        table td {
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <script src="./vue.js"></script>
+    <div id="app">
+        id:<input type="text" v-model="id" /> <!-- 绑定了数据，要在data进行定义 -->
+        姓名:<input type="text" v-model="name" />
+        数量:<input type="text" v-model="num" />
+        <button @click="addItem">添加</button> <!-- 方法在methdos -->
+
+        <input type="text" v-model="search" />
+
+        <table border="1" cellspacing="0" cellpadding="0">
+            <tr>
+                <th>全选 <input type="checkbox" v-model="allChecked" /> </th>
+                <th>id</th>
+                <th>名字</th>
+                <th>数量</th>
+                <th>时间</th>
+                <th>操作</th>
+            </tr>
+            <tr v-for="item in newUser" :key="item.id">
+                <td><input type="checkbox" v-model="item.isChecked"></td>
+                <td>{{item.id}}</td>
+                <td>{{item.name}}</td>
+                <td>
+                    <span v-if="!item.isIptShow" @click="item.isIptShow=!item.isIptShow">{{item.num}}</span>
+                    <input type="text" v-model.number="item.num" v-else style="width: 50px;text-align: center;"
+                        @blur="item.isIptShow=!item.isIptShow" v-focus />
+                    <!--当元素聚焦时，会触发 focus 事件;当元素失去焦点时，会触发blur事件-->
+                    <!--用自定义指令，钩子函数inserted完成自动获取焦点focus-->
+                </td>
+                <td>{{item.time}}</td>
+                <td><a href="#" @click="deleteItem(item)">删除</a></td>
+            </tr>
+        </table>
+        <hr>
+        <div class="footer">总计{{total}}</div> <!-- v-model.number="item.num"展示出来的才是数字-->
+       
+    </div>
+    <script>
+        Vue.directive('focus', {
+            inserted(el, binding) {
+                el.focus();
+            }
+        })
+        var aa = new Vue({
+            el: '#app',
+            data: {
+                id: '',
+                name: '',
+                num: '',
+                search: '',
+                user: [
+                    {
+                        isChecked: false,
+                        id: 1,
+                        name: '张三',
+                        isIptShow: false,
+                        num: 10,
+                        time: new Date().toLocaleDateString()
+                    },
+                    {
+                        isChecked: false,
+                        id: 2,
+                        name: '里斯',
+                        isIptShow: false,
+                        num: 10,
+                        time: new Date().toLocaleDateString()
+                    },
+                    {
+                        isChecked: false,
+                        id: 3,
+                        name: '王五',
+                        isIptShow: false,
+                        num: 10,
+                        time: new Date().toLocaleDateString()
+                    },
+                ]
+            },
+            computed: {
+                allChecked: {
+                    get() {
+                        return this.user.every(el => el.isChecked);
+                    },
+                    set(value) {
+                        this.user.forEach(el => el.isChecked = value);
+                    },
+                },
+                newUser() {
+                    // 输入框中绑定v-model=“search”，在data中定义                   
+                    return this.user.filter(el => el.name.includes(this.search));
+                }, // 要过滤后的newUser进行循环
+                total() {
+                    return this.user.reduce((cur, val) => {
+                        if (val.isChecked) {
+                            return cur + val.num;
+                        } else {
+                            return cur;
+                        }
+                    }, 0)
+                }
+            },
+            methods: {
+                addItem() {
+                    // 每一项都不能为空，id不能重复
+                    if (this.id == '' || this.name == '' || this.num == '') {
+                        return alert('选项不能为空')
+                    }
+                    if (this.user.some(el => el.id == this.id)) {
+                        return alert('id不能重复')
+                    } // el代表前面数组的每一项this.user。
+                    var obj = {
+                        isChecked: false,
+                        id: this.id,
+                        name: this.name,
+                        isIptShow: false,
+                        num: this.num,
+                        time: new Date().toLocaleDateString()
+                    }
+                    this.user.push(obj);
+                    this.id = this.name = this.num = ''
+                },
+                deleteItem(item) {
+                    console.log(item);
+                    const index = this.user.findIndex(el => el.id == item.id);
+                    this.user.splice(index, 1)
+                }
+            }
+
+        })
+    </script>
+</body>
+
+</html>
