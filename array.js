@@ -4,20 +4,20 @@ const arr = [0, 1, 2, 3, 4, 5, 6, 7, 8];
 // 示范
 // =========================================
 
-// map 映射
+// 1 map 映射
 // 传入的函数的意思：每一个元素要变成的样子
 // T => T
 // rule: 每个加一
 const mapArr1 = arr.map(i => i + 1); // 1 ~ 9
 
-// filter 过滤
+// 2 filter 过滤
 // 传入的函数的意思：如果是真就留下，如果是假就去掉 
 // T => boolean
 // rule: 去掉小于3
 const filterArr1 = arr.filter(i => !(i < 3)); // 3 ~ 8
 
 
-// findIndex 找位置
+// 3 findIndex 找位置
 // 传入的函数的意思：如果是真就是他，得到索引
 // rule 找到第一个比n大的数
 function solution(n) {
@@ -31,7 +31,15 @@ function solution(n) {
     console.log(result);
 }
 
-solution(99);
+
+// 4 reduce 归并
+// reduce(传入的函数, 初始的结果)
+// 传入的函数的意思: (现在的结果, 这个位置的值) => 下一个结果
+// rule 求和
+let reduce1 = arr.reduce((sum, i) => sum + i, 0); // 36
+
+// rule 相乘
+let reduce2 = arr.reduce((rst, i) => rst * i, 1); // 0 * 8!
 
 
 // 链式调用1

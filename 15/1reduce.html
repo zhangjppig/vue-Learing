@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+
+<body>
+    <script>
+        var people = {
+            name: '张三',
+            age: 33,
+            info: {
+                work: '美团骑手',
+                address: {
+                    ad1: '美团办事处',
+                    ad2: '人民路',
+                },
+                mobile: 12030404332,
+            }
+        }
+        // var arr=['info','address','ad2']; 
+        // const result =arr.reduce((newObj,key)=>{
+        //     return newObj[key]
+        // },people)
+
+        var str = 'info.address.ad2';
+        // const result = str.split('.').reduce((newObj, key) => newObj[key], people);
+
+        let result;
+        const keysArr = str.split('.');
+        for (let i = 0; i < keysArr.length; i++) {
+            const key = keysArr[i];
+            result = result[key];
+        }
+
+        console.log(result);
+    </script>
+
+
+
+
+</body>
+
+</html>
